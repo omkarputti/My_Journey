@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omkar's Cybersecurity Journey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0d6efd;
+            --secondary: #6c757d;
+            --dark: #121212;
+            --light: #f8f9fa;
+            --cyber-blue: #0dcaf0;
+            --cyber-purple: #6f42c1;
+            --neon-green: #39ff14;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Floating Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            background-color: #1a1a1a;
+            padding: 1rem 0;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: var(--cyber-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--cyber-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 60px; /* Space for navbar */
+        }
+
+        .content {
+            margin-left: 0;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-name {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--cyber-blue);
+            text-shadow: 0 0 10px rgba(13, 202, 240, 0.5);
+        }
+
+        .hero-title {
+            font-size: 2rem;
+            color: var(--cyber-purple);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--light);
+            max-width: 600px;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin: 2rem 0;
+            max-width: 600px;
+            color: #aaa;
+        }
+
+        .photo-placeholder {
+            width: 200px;
+            height: 200px;
+            background-color: #333;
+            border-radius: 50%;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            border: 3px solid var(--cyber-blue);
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #333;
+            margin: 2rem 0;
+            width: 100%;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar-nav-menu {
+            list-style: none;
+            margin-top: 3rem;
+        }
+
+        .sidebar-nav-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: block;
+            position: relative;
+        }
+
+        .sidebar-nav-link:hover {
+            color: var(--cyber-blue);
+            transform: translateX(5px);
+        }
+
+        .sidebar-nav-link::before {
+            content: '>';
+            position: absolute;
+            left: -15px;
+            color: var(--cyber-blue);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-nav-link:hover::before {
+            opacity: 1;
+            left: -10px;
+        }
+
+        /* Checkbox styling */
+        .checkbox-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--cyber-blue);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            color: var(--neon-green);
+            font-size: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .checkbox-item label {
+            color: #aaa;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        /* Button styling */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--cyber-blue);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 1rem 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn:hover {
+            background-color: var(--neon-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--cyber-blue);
+            color: var(--cyber-blue);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--cyber-blue);
+            color: var(--dark);
+        }
+
+        /* Section styling */
+        .section {
+            width: 100%;
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--cyber-blue);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background-color: var(--cyber-purple);
+        }
+
+        /* Skills Section */
+        .skills-container {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--cyber-blue);
+        }
+
+        .skills-command {
+            color: var(--neon-green);
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .skills-list {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+
+        .skills-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .skills-list li::before {
+            content: '-';
+            position: absolute;
+            left: 0;
+            color: var(--cyber-blue);
+        }
+
+        /* Journey Section */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--cyber-blue);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--cyber-purple);
+            border: 2px solid var(--cyber-blue);
+        }
+
+        .timeline-date {
+            color: var(--cyber-purple);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .timeline-description {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--cyber-purple);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .project-position {
+            color: var(--cyber-blue);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .project-description {
+            color: #ccc;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .project-links a {
+            color: var(--neon-green);
+            text-decoration: none;
+            margin-right: 1rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blog Section */
+        .blog-section {
+            width: 100%;
+            max-width: 800px;
+            margin: 4rem auto;
+        }
+
+        .blog-entry {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .entry-date {
+            color: var(--cyber-purple);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .entry-title:hover {
+            color: var(--cyber-blue);
+        }
+
+        .entry-content {
+            margin-bottom: 1rem;
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        .entry-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background-color: #333;
+            color: var(--neon-green);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .contact-info {
+            margin-bottom: 2rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-link {
+            color: var(--light);
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--cyber-blue);
+            transform: translateY(-3px);
+        }
+
+        /* Animation */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background-color: var(--neon-green);
+            margin-left: 5px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                left: 0;
+            }
+            
+            .container {
+                flex-direction: column;
+                padding-top: 120px; /* Extra space for both navbars */
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+                padding: 1.5rem;
+                text-align: center;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 2rem;
+            }
+
+            .hero-name {
+                font-size: 2.5rem;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-tagline {
+                font-size: 1.2rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .sidebar-nav-menu {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .sidebar-nav-item {
+                margin-bottom: 0;
+            }
+
+            .sidebar-nav-link:hover::before {
+                display: none;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Navbar -->
+    <nav class="navbar">
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="#journey" class="nav-link">Journey</a></li>
+            <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
+            <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
+            <li class="nav-item"><a href="#blog" class="nav-link">Blog</a></li>
+            <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <!-- ...existing code... -->
+        
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Hero Section -->
+            <section class="hero-section" id="home">
+                <div class="photo-placeholder">
+                    <img src="om.png" alt="Omkar Putti" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+                </div>
+                <div class="hero-name">OMKAR PUTTI</div>
+                <h1 class="hero-title">Engineering Student</h1>
+                <p class="hero-tagline">
+                    Tracking my path to becoming a cybersecurity expert<span class="cursor"></span>
+                </p>
+                <div>
+                    <a href="#journey" class="btn btn-outline">View My Journey</a>
+                    <a href="Resume_OMKAR.pdf" download="Omkar_Putti_Resume.pdf" class="btn">Download CV</a>
+                </div>
+                <div class="divider"></div>
+                <p class="hero-description" style="margin-top: 2rem;">
+                    I love cybersecurity. I love the thrill of discovering vulnerabilities and securing systems. 
+                    This passion has taken me through countless challenges and given me opportunities to work with 
+                    amazing professionals in the field.
+                </p>
+            </section>
+            
+            <!-- Skills Section -->
+            <section class="section" id="skills">
+                <h2 class="section-title">Skills</h2>
+                <div class="skills-container">
+                    <div class="skills-command">$ cat skills.txt</div>
+                    <ul class="skills-list">
+                        <li>Network Security Analysis</li>
+                        <li>Penetration Testing</li>
+                        <li>Incident Response</li>
+                        <li>Security Architecture</li>
+                        <li>Threat Intelligence</li>
+                        <li>Kali Linux</li>
+                        <li>Wireshark</li>
+                        <li>Nmap</li>
+                        <li>Burp Suite</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Journey Section -->
+            <section class="section" id="journey">
+                <h2 class="section-title">My Journey</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024 - Present</div>
+                        <h3 class="timeline-title">KLS Gogte Institute of Technology</h3>
+                        <p class="timeline-description">
+                            Bachelor in Engineering, focusing on cybersecurity fundamentals and practical applications.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">May 2025</div>
+                        <h3 class="timeline-title">Byte-Battle Hackathon (3rd Place)</h3>
+                        <p class="timeline-description">
+                            Built SmartAcad web application, solving real-world problems in EdTech. Demonstrated creativity, coding, and teamwork under time pressure.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">April 2025</div>
+                        <h3 class="timeline-title">Ideathon 25 (1st Place)</h3>
+                        <p class="timeline-description">
+                            Developed Resume Assessor Bot using UiPath RPA that scans PDF resumes and compares them with job descriptions to filter qualified candidates.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2010 - 2024</div>
+                        <h3 class="timeline-title">KLE International School</h3>
+                        <p class="timeline-description">
+                            Developed foundational knowledge in technology and problem-solving that sparked my interest in cybersecurity.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Projects Section -->
+            <section class="section" id="projects">
+                <h2 class="section-title">Projects & Achievements</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3 class="project-title">SmartAcad</h3>
+                        <span class="project-position">3rd Place Winner - Byte-Battle Hackathon</span>
+                        <p class="project-description">
+                            Built a working web application using HTML, CSS, JavaScript, Python that solves a real-world problem in EdTech. Secured 3rd position among 45+ teams.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7340040325740081153/" target="_blank">View Project Details</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3 class="project-title">Resume Assessor Bot</h3>
+                        <span class="project-position">1st Place Winner - Ideathon 25</span>
+                        <p class="project-description">
+                            Developed an intelligent Resume Assessor Bot using UiPath RPA that scans PDF resumes and compares them with job descriptions to filter qualified candidates.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://www.linkedin.com/feed/update/urn:li:activity:7333159171502043136/" target="_blank">View Project Details</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Blog Section -->
+            <section class="blog-section" id="blog">
+                <h2 class="section-title">Latest Blog Entries</h2>
+                
+                <div class="blog-entry">
+                    <div class="entry-date">2023-10-15</div>
+                    <h3 class="entry-title">Completed TryHackMe's Offensive Pentesting Path</h3>
+                    <p class="entry-content">
+                        Today I finished the 30-day offensive pentesting path on TryHackMe. Learned so much about 
+                        enumeration, exploitation, and privilege escalation. The final challenge was particularly 
+                        tough but rewarding. Next up: OSCP preparation!
+                    </p>
+                    <div class="entry-tags">
+                        <span class="tag">#pentesting</span>
+                        <span class="tag">#tryhackme</span>
+                        <span class="tag">#oscp</span>
+                    </div>
+                </div>
+                
+                <div class="blog-entry">
+                    <div class="entry-date">2023-09-28</div>
+                    <h3 class="entry-title">Built My First Custom SIEM</h3>
+                    <p class="entry-content">
+                        After weeks of studying ELK Stack, I finally built my own SIEM solution that ingests 
+                        logs from multiple sources and detects suspicious activity. Implemented custom rules 
+                        for detecting brute force attacks and unusual login patterns. The visualization 
+                        dashboards are incredibly useful for monitoring.
+                    </p>
+                    <div class="entry-tags">
+                        <span class="tag">#siem</span>
+                        <span class="tag">#elk</span>
+                        <span class="tag">#security</span>
+                    </div>
+                </div>
+                
+                <div class="blog-entry">
+                    <div class="entry-date">2023-09-10</div>
+                    <h3 class="entry-title">Earned My eJPT Certification</h3>
+                    <p class="entry-content">
+                        Passed the eLearnSecurity Junior Penetration Tester exam today! The 48-hour practical 
+                        exam was intense but really tested my skills in web app pentesting and network 
+                        exploitation. This is my first cybersecurity certification and I'm pumped to keep going.
+                    </p>
+                    <div class="entry-tags">
+                        <span class="tag">#certification</span>
+                        <span class="tag">#ejpt</span>
+                        <span class="tag">#pentesting</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Contact Section -->
+            <section class="section" id="contact">
+                <h2 class="section-title">Contact Me</h2>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> +91 7204426087</p>
+                        <p><i class="fas fa-envelope"></i> 24u0432@students.git.edu</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Skynest Apartment, Tilakwadi, Belagavi, Karnataka, 590006, India</p>
+                    </div>
+                    <div class="contact-links">
+                        <a href="https://www.linkedin.com/" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/" target="_blank" class="contact-link"><i class="fab fa-github"></i></a>
+                        <a href="https://instagram.com/" target="_blank" class="contact-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Checkbox interaction
+            document.querySelectorAll('.checkbox-item input').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const label = this.nextElementSibling;
+                    if (this.checked) {
+                        label.style.color = 'var(--neon-green)';
+                        label.style.textDecoration = 'line-through';
+                    } else {
+                        label.style.color = '#aaa';
+                        label.style.textDecoration = 'none';
+                    }
+                });
+            });
+            
+            // Set checkboxes to checked by default
+            document.getElementById('hacker').checked = true;
+            document.getElementById('hacker').dispatchEvent(new Event('change'));
+            document.getElementById('coder').checked = true;
+            document.getElementById('coder').dispatchEvent(new Event('change'));
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('.nav-link, .sidebar-nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 60, // Adjusted for navbar height
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Make blog titles clickable (could link to full blog posts)
+            document.querySelectorAll('.entry-title').forEach(title => {
+                title.addEventListener('click', function() {
+                    // You can add functionality to expand the post or link to a full page
+                    console.log('Blog post clicked: ' + this.textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
