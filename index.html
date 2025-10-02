@@ -153,6 +153,19 @@
             justify-content: center;
             color: #666;
             border: 3px solid var(--cyber-blue);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(13, 202, 240, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(13, 202, 240, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(13, 202, 240, 0);
+            }
         }
 
         .divider {
@@ -278,6 +291,14 @@
             max-width: 800px;
             margin: 4rem auto;
             padding: 2rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-title {
@@ -520,6 +541,16 @@
             transform: translateY(-3px);
         }
 
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+
         /* Animation */
         @keyframes blink {
             0%, 100% { opacity: 1; }
@@ -600,6 +631,7 @@
     </style>
 </head>
 <body>
+    <canvas id="matrix-canvas"></canvas>
     <!-- Floating Navbar -->
     <nav class="navbar">
         <ul class="nav-menu">
@@ -622,10 +654,10 @@
                 <div class="photo-placeholder">
                     <img src="om.png" alt="Omkar Putti" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
                 </div>
-                <div class="hero-name">OMKAR PUTTI</div>
-                <h1 class="hero-title">Engineering Student</h1>
-                <p class="hero-tagline">
-                    Tracking my path to becoming a cybersecurity expert<span class="cursor"></span>
+                <div id="hero-name" class="hero-name"></div>
+                <h1 id="hero-title" class="hero-title"></h1>
+                <p id="hero-tagline" class="hero-tagline">
+                    <span class="cursor"></span>
                 </p>
                 <div>
                     <a href="#journey" class="btn btn-outline">View My Journey</a>
@@ -807,10 +839,10 @@
             });
             
             // Set checkboxes to checked by default
-            document.getElementById('hacker').checked = true;
-            document.getElementById('hacker').dispatchEvent(new Event('change'));
-            document.getElementById('coder').checked = true;
-            document.getElementById('coder').dispatchEvent(new Event('change'));
+            // document.getElementById('hacker').checked = true;
+            // document.getElementById('hacker').dispatchEvent(new Event('change'));
+            // document.getElementById('coder').checked = true;
+            // document.getElementById('coder').dispatchEvent(new Event('change'));
             
             // Smooth scrolling for navigation links
             document.querySelectorAll('.nav-link, .sidebar-nav-link').forEach(link => {
@@ -832,6 +864,112 @@
                     // You can add functionality to expand the post or link to a full page
                     console.log('Blog post clicked: ' + this.textContent);
                 });
+            });
+
+            // Matrix rain effect
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*()-+';
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+
+            const drops = [];
+            for (let x = 0; x < columns; x++) {
+                drops[x] = 1;
+            }
+
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#0f0';
+                ctx.font = fontSize + 'px monospace';
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            setInterval(drawMatrix, 33);
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                // Recalculate columns and reset drops on resize if needed
+            });
+
+            // Typing effect for hero section
+            const nameText = "OMKAR PUTTI";
+            const titleText = "Engineering Student";
+            const taglineText = "Tracking my path to becoming a cybersecurity expert";
+
+            const nameEl = document.getElementById('hero-name');
+            const titleEl = document.getElementById('hero-title');
+            const taglineEl = document.getElementById('hero-tagline');
+            const cursorEl = document.querySelector('.cursor');
+
+            function typeWriter(element, text, speed, callback) {
+                let i = 0;
+                element.innerHTML = ""; // Clear existing content
+                function type() {
+                    if (i < text.length) {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    } else if (callback) {
+                        callback();
+                    }
+                }
+                type();
+            }
+
+            // Hide cursor initially, then start typing
+            cursorEl.style.display = 'none';
+
+            setTimeout(() => {
+                cursorEl.style.display = 'inline-block';
+                typeWriter(nameEl, nameText, 150, () => {
+                    typeWriter(titleEl, titleText, 100, () => {
+                        // Re-attach cursor to the tagline
+                        taglineEl.innerHTML = ''; // Clear it first
+                        taglineEl.appendChild(cursorEl);
+
+                        typeWriter(taglineEl, taglineText, 75, () => {
+                            // Typing finished, cursor remains blinking
+                        });
+                    });
+                });
+            }, 500); // Small delay before starting
+
+            // Scroll-based fade-in animations
+            const sections = document.querySelectorAll('.section');
+            const options = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, options);
+
+            sections.forEach(section => {
+                observer.observe(section);
             });
         });
     </script>
